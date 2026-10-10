@@ -1,4 +1,3 @@
-cat << 'EOF' > README.md
 # MedSAM + Grounding DINO Pipeline
 
 Pipeline de détection et segmentation d'images médicales combinant **Grounding DINO** (génération de boîtes englobantes à partir de requêtes textuelles) et **MedSAM** (segmentation guidée par invites géométriques).
@@ -69,4 +68,3 @@ python src/utils/check_env.py
 ## Crédits & Remerciements
 
 Projet initial développé en collaboration avec Morad Bel Melih dans le cadre du cours INF8225 à Polytechnique Montréal.
-EOF
