@@ -1,6 +1,6 @@
 # Environnements et outils de packaging
-.venv/
-.uv/
+/.venv/
+/.uv/
 
 # Caches et bytecode
 __pycache__/
@@ -11,13 +11,13 @@ __pycache__/
 *.pth
 *.pt
 *.bin
-checkpoints/
-models_weights/
-work_dirs/
+/checkpoints/
+/models_weights/
+/work_dirs/
 
 # Données et résultats locaux
-data/
-results/
+/data/
+/results/
 *.nii.gz
 *.png
 *.jpg

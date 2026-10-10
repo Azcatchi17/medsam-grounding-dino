@@ -68,3 +68,13 @@ python src/utils/check_env.py
 ## Crédits & Remerciements
 
 Projet initial développé en collaboration avec Morad Bel Melih dans le cadre du cours INF8225 à Polytechnique Montréal.
+
+Ce projet s'appuie sur les travaux et implémentations de recherche suivants :
+
+* **MedSAM** : Wang, B., et al. (2024). *Segment Anything in Medical Images*. Nature Communications.  
+  Code source officiel : [bowang-lab/MedSAM](https://github.com/bowang-lab/MedSAM)
+* **Segment Anything (SAM)** : Kirillov, A., et al. (2023). *Segment Anything*. ICCV 2023.  
+  Architecture et code de base : [facebookresearch/segment-anything](https://github.com/facebookresearch/segment-anything)
+* **Grounding DINO** : Liu, S., et al. (2023). *Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection*.  
+  Code source officiel : [IDEA-Research/GroundingDINO](https://github.com/IDEA-Research/GroundingDINO)
+* **Dataset Kvasir-SEG** : Jha, D., et al. (2020). *Kvasir-SEG: A Segmented Polyp Dataset*. Simula Research Laboratory. [datasets.simula.no/kvasir-seg](https://datasets.simula.no/kvasir-seg/)
