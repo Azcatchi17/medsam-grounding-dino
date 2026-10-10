@@ -26,6 +26,7 @@ dependencies = [
     "scipy>=1.11.0",
     "setuptools<70.0.0",
     "wheel",
+    "pandas>=2.3.3",
 ]
 
 [build-system]
@@ -41,3 +42,6 @@ explicit = true
 torch = { index = "pytorch-cu121" }
 torchvision = { index = "pytorch-cu121" }
 segment-anything = { git = "https://github.com/facebookresearch/segment-anything.git" }
+
+[tool.uv]
+package = false
