@@ -1,8 +1,6 @@
 import json
-import os
 from pathlib import Path
 from sklearn.model_selection import train_test_split
-
 from src.utils.paths import DATA_DIR
 
 
@@ -22,12 +20,12 @@ def convert_kvasir_to_coco_split(input_json_path: Path, output_dir: Path):
     # Ordre identique à l'implémentation d'origine pour préserver le split avec random_state=42
     image_keys = list(data.keys())
 
-    # 1. Séparation Train (800) vs Rest (200)
+    # Séparation Train (800) vs Rest (200)
     train_keys, rest_keys = train_test_split(
         image_keys, train_size=0.8, random_state=42, shuffle=True
     )
 
-    # 2. Séparation Val (100) vs Test (100)
+    # Séparation Val (100) vs Test (100)
     val_keys, test_keys = train_test_split(
         rest_keys, train_size=0.5, random_state=42, shuffle=True
     )
