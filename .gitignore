@@ -1,0 +1,39 @@
+cat << 'EOF' > .gitignore
+# Environnements et outils de packaging
+.venv/
+.uv/
+
+# Caches et bytecode
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Poids de modèles et checkpoints
+*.pth
+*.pt
+*.bin
+checkpoints/
+models_weights/
+work_dirs/
+
+# Données et résultats locaux
+data/
+results/
+*.nii.gz
+*.png
+*.jpg
+
+# Exceptions pour les visuels du README
+!assets/*.png
+!assets/*.jpg
+
+# Fichiers d'états et logs
+optimal_threshold.txt
+threshold_run_*.txt
+*.log
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+EOF
