@@ -11,13 +11,16 @@ __pycache__/
 *.pth
 *.pt
 *.bin
-/checkpoints/
+/checkpoints/*
+!checkpoints/.gitkeep
 /models_weights/
 /work_dirs/
 
 # Local data and results
-/data/
-/results/
+/data/*
+!data/.gitkeep
+/results/*
+!results/.gitkeep
 *.nii.gz
 *.png
 *.jpg

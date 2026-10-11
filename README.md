@@ -13,11 +13,11 @@ The project evaluates system performance across two medical use cases:
 ## Project Structure
 
 - `assets/`: Documentation visuals, figures, and diagrams.
-- `checkpoints/`: Local model checkpoints (`.pth`), excluded from Git tracking.
+- `checkpoints/`: Model checkpoints directory (weights excluded from Git tracking).
 - `configs/`: Configuration files (hyperparameters, text prompts, optimal thresholds).
-- `data/`: Local dataset folders (e.g., `Kvasir-SEG/`), excluded from Git tracking.
+- `data/`: Dataset storage directory (raw/processed files excluded from Git tracking).
 - `notebooks/`: Interactive demonstration and visualization notebooks.
-- `results/`: Evaluation metrics and exported prediction masks.
+- `results/`: Evaluation metrics and exported prediction masks (outputs excluded from Git tracking).
 - `src/`: Modular source code:
   * `data/`: Dataset preprocessing and conversion scripts.
   * `models/`: Inference wrappers for Grounding DINO, MedSAM, and baseline models.
@@ -47,7 +47,7 @@ uv sync
 uv pip install --no-build-isolation mmcv==2.1.0 mmdet==3.3.0
 
 # 4. Verify environment setup
-uv run python src/utils/check_env.py
+uv run python -m src.utils.check_env
 ```
 
 ### Standard Installation (pip)
@@ -62,7 +62,7 @@ pip install -r requirements.txt
 pip install --no-build-isolation mmcv==2.1.0 mmdet==3.3.0
 
 # 3. Verify environment setup
-python src/utils/check_env.py
+python -m src.utils.check_env
 ```
 
 ---
