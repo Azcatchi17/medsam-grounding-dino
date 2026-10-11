@@ -1,7 +1,4 @@
-"""Évaluation de l'Oracle Baseline (MedSAM avec bounding boxes de vérité terrain)
-
-sur le dataset Kvasir-SEG.
-"""
+"""Evaluate the Oracle baseline (MedSAM with ground-truth bounding boxes) on Kvasir-SEG."""
 
 import json
 from pathlib import Path
@@ -16,7 +13,7 @@ from src.utils.paths import DATA_DIR, RESULTS_DIR
 
 
 def evaluate_oracle_kvasir():
-    # Gestion des chemins
+    # Setup data and output paths
     kvasir_dir = DATA_DIR / "Kvasir-SEG"
     img_folder = kvasir_dir / "images"
     masks_folder = kvasir_dir / "masks"
@@ -30,13 +27,13 @@ def evaluate_oracle_kvasir():
 
     csv_output_path = results_folder / "dice_oracle_kvasir.csv"
 
-    # Vérification de l'existence des résultats
+    # Load existing results if already computed
     if csv_output_path.exists():
-        print(f"Les résultats existent déjà dans {csv_output_path}.")
-        print("Inférence ignorée. Chargement des données existantes...")
+        print(f"Results already exist at {csv_output_path}.")
+        print("Skipping inference and loading CSV file...")
         df = pd.read_csv(csv_output_path)
     else:
-        # Préparation des données si inférence nécessaire
+        # Load ground truth bounding boxes and map images to their split
         with open(bboxes_file, "r", encoding="utf-8") as f:
             bboxes = json.load(f)
 
@@ -50,28 +47,29 @@ def evaluate_oracle_kvasir():
                         img_id = Path(img_info["file_name"]).stem
                         image_to_split[img_id] = split_name
 
-        # Initialisation du modèle MedSAM
+        # Initialize MedSAM predictor
         predictor = MedSAMPredictor()
 
         dice_list = []
-        print("\nLancement de la segmentation MedSAM (Oracle)...")
+        print("\nRunning MedSAM Oracle segmentation...")
 
+        # Sort files to ensure deterministic iteration order
         image_files = sorted([f for f in img_folder.iterdir() if f.suffix.lower() in [".jpg", ".jpeg", ".png"]])
 
-        # Boucle d'inférence
-        for img_path in tqdm(image_files, desc="Segmentation MedSAM"):
+        # Main inference loop
+        for img_path in tqdm(image_files, desc="MedSAM Oracle"):
             img_id = img_path.stem
             split = image_to_split.get(img_id, "unknown")
 
             img_3c = load_rgb_image(img_path)
             H, W, _ = img_3c.shape
 
-            # Extraction de l'embedding d'image via le wrapper
+            # Compute image embedding once per image
             image_embedding, shape = predictor.encode_image(img_3c)
 
             full_medsam_seg = np.zeros((H, W), dtype=np.uint8)
 
-            # Inférence par boîte englobante de vérité terrain
+            # Predict a mask for each bounding box and merge results
             if img_id in bboxes:
                 for bbox in bboxes[img_id]["bbox"]:
                     x_min, y_min = bbox["xmin"], bbox["ymin"]
@@ -82,9 +80,10 @@ def evaluate_oracle_kvasir():
                         bbox=[x_min, y_min, x_max, y_max],
                         original_shape=shape,
                     )
+                    # Union mask when multiple bounding boxes exist for the same image
                     full_medsam_seg[medsam_seg > 0] = 1
 
-            # Sauvegarde du masque prédit
+            # Save predicted binary mask as an 8-bit image
             dest_mask_path = output_masks_folder / f"seg_{img_path.name}"
             io.imsave(
                 str(dest_mask_path),
@@ -92,7 +91,7 @@ def evaluate_oracle_kvasir():
                 check_contrast=False,
             )
 
-            # Calcul du score Dice si le masque vérité terrain est présent
+            # Compute Dice score if ground truth mask is available
             mask_path = masks_folder / img_path.name
             if mask_path.exists():
                 true_seg = io.imread(str(mask_path))
@@ -108,16 +107,17 @@ def evaluate_oracle_kvasir():
                     "dice": dice_score,
                 })
 
+        # Save all results to CSV
         df = pd.DataFrame(dice_list)
         df.to_csv(csv_output_path, index=False)
-        print(f"\nRésultats sauvegardés dans : {csv_output_path}")
+        print(f"\nResults saved to {csv_output_path}")
 
-    # Analyse statistique
-    print("\n=== STATISTIQUES GLOBALES ORACLE ===")
+    # Display evaluation summary
+    print("\nOverall Oracle Dice:")
     print(df["dice"].describe())
 
-    print("\n=== STATISTIQUES PAR SET ===")
     if "split" in df.columns:
+        print("\nOracle Dice by split:")
         print(df.groupby("split")["dice"].describe())
 
 

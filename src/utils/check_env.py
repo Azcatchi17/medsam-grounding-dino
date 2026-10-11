@@ -1,18 +1,25 @@
-import torch
-print(f"CUDA disponible : {torch.cuda.is_available()}")
-if torch.cuda.is_available():
-    print(f"Périphérique GPU : {torch.cuda.get_device_name(0)}")
+"""Smoke test to verify CUDA availability and core library imports."""
 
-# Test OpenMMLab
-import mmengine
+# Verify PyTorch and CUDA availability
+import torch
+
+print(f"CUDA available: {torch.cuda.is_available()}")
+if torch.cuda.is_available():
+    print(f"GPU device: {torch.cuda.get_device_name(0)}")
+
+# Verify OpenMMLab packages
 import mmcv
 import mmdet
-print("OpenMMLab (mmengine, mmcv, mmdet) : OK")
+import mmengine
 
-# Test MedSAM / SAM
+print("OpenMMLab (mmengine, mmcv, mmdet): OK")
+
+# Verify Segment Anything (SAM)
 import segment_anything
-print("Segment Anything : OK")
 
-# Test Transformers (utilisé par DINO)
+print("Segment Anything: OK")
+
+# Verify Hugging Face Transformers
 import transformers
-print("Transformers : OK")
+
+print("Transformers: OK")

@@ -1,13 +1,13 @@
-# Environnements et outils de packaging
+# Environments and packaging tools
 /.venv/
 /.uv/
 
-# Caches et bytecode
+# Caches and bytecode
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
 
-# Poids de modèles et checkpoints
+# Model weights and checkpoints
 *.pth
 *.pt
 *.bin
@@ -15,23 +15,23 @@ __pycache__/
 /models_weights/
 /work_dirs/
 
-# Données et résultats locaux
+# Local data and results
 /data/
 /results/
 *.nii.gz
 *.png
 *.jpg
 
-# Exceptions pour les visuels du README
+# Exceptions for README visuals
 !assets/*.png
 !assets/*.jpg
 
-# Fichiers d'états et logs
+# Run state files and logs
 optimal_threshold.txt
 threshold_run_*.txt
 *.log
 
-# IDE
+# IDE and OS files
 .vscode/
 .idea/
 .DS_Store

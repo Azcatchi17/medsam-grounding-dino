@@ -1,7 +1,7 @@
 [project]
 name = "medsam-grounding-dino"
 version = "0.1.0"
-description = "Add your description here"
+description = "Text-prompted medical segmentation of polyps and pancreatic tumors combining Grounding DINO (zero-shot and fine-tuned) with MedSAM"
 readme = "README.md"
 authors = [
     { name = "Azcatchi17" }
